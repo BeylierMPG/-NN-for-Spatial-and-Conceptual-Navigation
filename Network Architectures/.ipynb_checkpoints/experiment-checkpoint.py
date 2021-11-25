@@ -62,7 +62,6 @@ class Experiment:
                 data.append(self.data_generator_training(type_of_seed = np.mod(k,2)))
                 data_evaluation.append(self.data_generator_evaluation())
         
-        print("data_evaluation",data_evaluation)
         for a in data:
             if a[4] == 1:
                 target.append([self.Target_position_grid[a[0],a[1]],0.0])
@@ -82,7 +81,7 @@ class Experiment:
                 else:
                     target_evaluation.append([0.0,0.0])
                                        
-        print("target_evaluation",target_evaluation)
+       
         data, target = torch.tensor(data,dtype=torch.float32), torch.tensor(target,dtype=torch.float32)
         data_evaluation, target_evaluation = torch.tensor(data_evaluation,dtype=torch.float32), torch.tensor(target_evaluation,dtype=torch.float32)
 

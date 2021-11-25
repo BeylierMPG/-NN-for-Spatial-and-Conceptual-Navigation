@@ -48,6 +48,8 @@ def layers_connexion(model,input_size):
 class Network_Visualization:
     def __init__(self,display,magnification,Model,input_size):
         self.layers,self.connexions,self.nodes = layers_connexion(Model,input_size)
+        print(self.connexions)
+        #self.connexions = [np.array([[1., 1., 1., 1., 1.],[1., 1., 1., 1., 1.]]),np.array([[2., 2.],[2., 2.],[3., 3.],[3., 3.]]), np.array([[2., 2., 3., 3.]])]
         # Set whether the environment should be displayed after every step
         self.display = display
         # Set the magnification factor of the display
@@ -95,7 +97,6 @@ class Network_Visualization:
             for j in range(len(self.Nodes_coordinates[i])):
                 cv2.circle(self.image,center= self.Nodes_coordinates[i][j], 
                            radius = self.rayon, 
-                           #color =(139,139,0),
                            color =(0,0,0), 
                            thickness = 2 )
         #Draw the connexions
@@ -103,14 +104,17 @@ class Network_Visualization:
             g = self.connexions[i-1].shape
             for j in range(g[0]):
                 for k in range(g[1]):
-                    if self.connexions[i-1][j][k] != 0:
-                      
-                        cv2.line(self.image, 
-                                 pt1 = np.array(self.Nodes_coordinates[i-1][k]) + [0,self.rayon], 
-                                 pt2 = np.array(self.Nodes_coordinates[i][j]) - [0,self.rayon],
-                                 #color =  (238,229,142) , 
-                                 color =  (0,0,0) ,
-                                 thickness = 2)
+                    if self.connexions[i-1][j][k] == 1:
+                        COLOR = (0,0,0)
+                    if self.connexions[i-1][j][k] == 2:
+                        COLOR = (200,0,0)
+                    if self.connexions[i-1][j][k] == 3:
+                        COLOR = (0,0,200)    
+                    cv2.line(self.image, 
+                            pt1 = np.array(self.Nodes_coordinates[i-1][k]) + [0,self.rayon], 
+                            pt2 = np.array(self.Nodes_coordinates[i][j]) - [0,self.rayon],
+                            color =  COLOR , 
+                            thickness = 2)
 
         cv2.imshow("Neural Network", self.image)
         # This line is necessary to give time for the image to be rendered on the screen
