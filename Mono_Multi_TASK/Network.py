@@ -27,7 +27,7 @@ class Net(torch.nn.Module):
 
     def forward(self, x):
         x = self.fc1(x)
-        x = F.relu(self.fc2(x)) #tanh if does not work than not a smoothness issue
+        x = torch.tanh(self.fc2(x)) #tanh if does not work than not a smoothness issue
         x = self.fc3(x)
         return torch.sigmoid(x)
 
