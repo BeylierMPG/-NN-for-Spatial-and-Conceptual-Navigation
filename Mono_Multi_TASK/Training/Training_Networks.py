@@ -21,7 +21,7 @@ class Training():
         self.Liste_cka_init =[[] for i in range(3)]
 
     
-    def training_individual(self,Input_Dimension,Nodes_Second,Nodes_Third,Epoch,train_loader,val_loader,test_loader,do_analysis,type,network_type,frequence):
+    def training_individual(self,Input_Dimension,Nodes_Second,Nodes_Third,Epoch,train_loader,val_loader,test_loader,do_analysis,type,network_type = "Individual",frequence=10):
         
         model = Net_Individual(input_dimension=Input_Dimension,nodes_second = Nodes_Second,nodes_third = Nodes_Third,nodes_output = 1)   
         optimizer = torch.optim.Adam(model.parameters(), lr=0.01, betas=(0.9, 0.999), eps=1e-08, weight_decay=0, amsgrad=False)
@@ -102,7 +102,7 @@ class Training():
        
         return model,val_losses
 
-    def training_multi(self,Input_Dimension,Nodes_Second,Nodes_Third,Output_Dimension,Epoch,train_loader,val_loader,test_loader,do_analysis,type,frequence):
+    def training_multi(self,Input_Dimension,Nodes_Second,Nodes_Third,Output_Dimension,Epoch,train_loader,val_loader,test_loader,do_analysis,type = 1,frequence=10):
         
         model = Net_Multi(input_dimension=Input_Dimension,nodes_second = Nodes_Second,nodes_third = Nodes_Third,nodes_output = Output_Dimension)    
         print(model)
@@ -170,10 +170,14 @@ class Training():
         
             
             if do_analysis:
+                print("aaaaa")
           
                 if np.mod(epoch,frequence)==0: 
+                    print("ccccc")
                     generate_data = Generate_Data(model,test_loader)
+                    print("eeee")
                     activity_layer = generate_data.generate_preprocessed_data(multi = True)
+                    print("ddd")
 
                     if type == 0:
                         if epoch == 0:
@@ -193,6 +197,7 @@ class Training():
                                     self.Liste_cka_init[layer].append(cka_init)
 
                     if type == 1:
+                        print("bbbbb")
                         representation_learning = Representation_Learning(frequence,"Multi")
                         representation_learning.Isomap_plot_save(activity_layer,epoch,"Multi")
                         

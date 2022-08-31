@@ -28,7 +28,7 @@ class Training_frozen_weights():
         
 
     
-    def training_individual(self,model,optimizer,criterion,Epoch,train_loader,val_loader,test_loader,spatial_task,option_interleaved,epoch_interleaved,do_analysis,type,network_type,frequence):
+    def training_individual(self,model,optimizer,criterion,Epoch,train_loader,val_loader,test_loader,spatial_task,do_analysis,type,network_type,frequence):
         
         
 

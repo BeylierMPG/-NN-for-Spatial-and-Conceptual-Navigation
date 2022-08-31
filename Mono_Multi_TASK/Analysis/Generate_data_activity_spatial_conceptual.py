@@ -36,6 +36,8 @@ class Generate_Data():
         Liste_activation = [[] for i in range(len(self.Names_hook))] 
         episode = 0
         nodes_input = self.model.fc1[0].in_features
+        print("ggggg")
+        print("nodes input",nodes_input)
         for x_test,y_test in self.test_loader:
             with torch.no_grad():
                 pumpkin_seed = np.int(x_test[0][5])
@@ -45,8 +47,8 @@ class Generate_Data():
                 elif nodes_input == 3:
                     x_test = x_test[:,2:5]
                 else:
-                    x_test = x_test[:,0:5]
-                yhat = torch.nn.Sigmoid()(self.model(x_test).squeeze(1))
+                    x_test = x_test.squeeze(0)
+                yhat = torch.nn.Sigmoid()(self.model(x_test))
                 for h in range(len(self.Names_hook)):
                     b = torch.flatten(self.activation_hook.activation[self.Names_hook[h]])
                     Liste_activation[h].append(b)  
