@@ -6,13 +6,14 @@ import torch.nn as nn
 import sys
 sys.path.append("/Users/charlottebeylier/Documents/PhD/Spatial and Conceptual Learning/github_code/Learning_dynamic/Analysis")
 from Generate_data_activity_spatial_conceptual import Generate_Data
-from Representation_learning import Representation_Learning
+from Representation_analysis import Representation_Learning
+from Visualisation_Tool import Visu_Tool
 
 sys.path.append("/Users/charlottebeylier/Documents/PhD/Spatial and Conceptual Learning/github_code/Learning_dynamic/Models")
 from Networks_v2 import Net_Multi
 from Mask import Masks
 from sklearn.manifold import Isomap
-
+import matplotlib.image as mpimg
 
 class Training():
     
@@ -21,7 +22,7 @@ class Training():
         self.Liste_cka_init =[[] for i in range(3)]
         self.Names_hook = ["fc1","fc2","fc3"]
 
-    def training_multi(self,Input_Dimension,Nodes_Second,Nodes_Third,Output_Dimension,Epoch,train_loader,val_loader,test_loader,do_analysis,type = 1,frequence=10):
+    def training_multi(self,Input_Dimension,Nodes_Second,Nodes_Third,Output_Dimension,Epoch,train_loader,val_loader,test_loader,do_analysis,type = 1,frequence=10,create_movie=True):
         
         model = Net_Multi(input_dimension=Input_Dimension,nodes_second = Nodes_Second,nodes_third = Nodes_Third,nodes_output = Output_Dimension)    
         #print(model)
@@ -111,7 +112,23 @@ class Training():
                     fig.colorbar(cax)
                 
                 
-                plt.show()
+                    plt.show()
+
+                if create_movie:
+
+                    visu = Visu_Tool()
+                    path = visu.creation_files("Switching_nodes")
+                    plt.savefig(path)
+
+            if create_movie:
+                visu.movie(path)
+    
+
+    
+
+                        
+
+
                     
                 
         
